@@ -6,9 +6,9 @@ export default function App() {
     <View style={styles.container}>
       <Text>Hello World!!! Welcome</Text>
       <View>
-      <Text>First styling Project</Text>
-      <Button title="Tap Me" />
-      </View>23
+      <Text>Basic Components</Text>
+      <Button title="Tap Me!!" />
+      </View>
     </View>
   );
 }
