@@ -8,7 +8,7 @@ export default function App() {
       <View>
       <Text>First styling Project</Text>
       <Button title="Tap Me" />
-      </View>
+      </View>23
     </View>
   );
 }
