@@ -1,78 +1,84 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Button,
+  flashlist,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
-  const [enteredText, setEnteredtext] = useState('');
-  const[listGoals, setListGolas]=useState([]);
-  function goalInputHandler(enteredText){
+  const [enteredText, setEnteredtext] = useState("");
+  const [listGoals, setListGolas] = useState([]);
+  function goalInputHandler(enteredText) {
     setEnteredtext(enteredText);
   }
-  function addGoalHandler(){
-
-setListGolas((currentListGoals)=> [...currentListGoals, enteredText]);
-setEnteredtext('');
+  function addGoalHandler() {
+    setListGolas((currentListGoals) => [...currentListGoals, {text: enteredText, id:Math.random().toString()}]);
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        
-      <TextInput style={styles.textInput} placeholder="Your Current goal" onChangeText={goalInputHandler}></TextInput>
-      <Button title="Add Goal" onPress={addGoalHandler}/>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your Current goal"
+          onChangeText={goalInputHandler}
+        ></TextInput>
+        <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-      <ScrollView alwaysBounceVertical={false}>
-        {listGoals.map((goal)=> <View style={styles.goalItem} key={goal}>
-          <Text style={styles.textColor}>{goal}</Text>
-          </View>)}
-          </ScrollView>
-        </View>
-      
+        <FlatList
+          data={listGoals}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.goalItem}>
+                <Text style={styles.textColor}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+        />
+      </View>
     </View>
-
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-paddingTop:100,
-paddingHorizontal:16,
+    flex: 1,
+    paddingTop: 100,
+    paddingHorizontal: 16,
   },
-inputContainer:{
-  flex:1,
-  flexDirection:'row',
-  justifyContent:'space-between',
-  alignItems:"center",
-  paddingBottom:50,
-  borderBottomWidth:2,
-  borderBottomColor:"#cccccc"
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 50,
+    borderBottomWidth: 2,
+    borderBottomColor: "#cccccc",
+  },
 
-},
-
-textInput: {
-borderWidth:1,
-borderColor:'#cccccc',
-width: '80%',
-padding:8,
-marginRight:8
-
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    width: "80%",
+    padding: 8,
+    marginRight: 8,
   },
   goalsContainer: {
-    flex:7,
-
+    flex: 7,
   },
   goalItem: {
-    margin:8,
-    padding:8,
-    borderRadius:6,
-    backgroundColor:'#5e0acc',
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
   },
-  textColor:
-  {
-    color:"white",
-
-  }
-
+  textColor: {
+    color: "white",
+  },
 });
