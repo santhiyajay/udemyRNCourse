@@ -8,22 +8,35 @@ export default function App() {
   const [listGoals, setListGoals] = useState([]); // Corrected here
 
   function addGoalHandler(enteredText) {
-    setListGoals((currentListGoals) => [  // Corrected here
+    setListGoals((currentListGoals) => [
+      // Corrected here
       ...currentListGoals,
       { text: enteredText, id: Math.random().toString() },
     ]);
   }
 
+  function onDeleteGoalHandler(id) {
+    setListGoals((currentListGoals) => {
+      return currentListGoals.filter((goal) => goal.id !== id);
+    });
+  }
+
   return (
     <View style={styles.container}>
-     <GoalInput onAddGoal={addGoalHandler}/>
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={listGoals}
           renderItem={(itemData) => {
-            return <GoalItem text={itemData.item.text} />;
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                id={itemData.item.id}
+                onDeleteGoal={onDeleteGoalHandler}
+              />
+            );
           }}
-          keyExtractor={(item) => item.id} 
+          keyExtractor={(item) => item.id}
         />
       </View>
     </View>
@@ -36,7 +49,7 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingHorizontal: 16,
   },
-  
+
   goalsContainer: {
     flex: 7,
   },
